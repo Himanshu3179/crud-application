@@ -129,7 +129,7 @@ const TodoList: React.FC<TodoListProps> = ({ initialTodos }) => {
               key={todo.id}
               className="group flex items-center rounded-lg text-white transition-all w-full"
             >
-              <div className="flex justify-between w-full hover:bg-[#2d2d2d] p-3  transition-all">
+              <div className="flex justify-between w-full hover:bg-[#2d2d2d] p-3 px-6 transition-all">
                 <div className="flex items-center space-x-3 w-full">
                   <button
                     onClick={() => toggleComplete(todo.id)}

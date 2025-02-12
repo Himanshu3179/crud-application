@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -32,6 +33,7 @@ const FormSchema = z
 const SignUpForm = () => {
   const { toast } = useToast();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -44,6 +46,8 @@ const SignUpForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setLoading(true);
+
     const response = await fetch("/api/user", {
       method: "POST",
       body: JSON.stringify(values),
@@ -65,6 +69,7 @@ const SignUpForm = () => {
         description: data.message,
         variant: "destructive",
       });
+      setLoading(false);
     }
   };
 
@@ -75,7 +80,6 @@ const SignUpForm = () => {
           Create an Account
         </h2>
 
-        {/* ✅ Sign-up Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
@@ -151,14 +155,15 @@ const SignUpForm = () => {
               )}
             />
 
-            {/* ✅ Submit Button */}
-            <Button className="w-full mt-10 bg-yellow-400 text-black rounded-lg p-3 text-lg font-semibold hover:bg-yellow-500">
-              Sign Up
+            <Button
+              className="w-full mt-10 bg-yellow-400 text-black rounded-lg p-3 text-lg font-semibold hover:bg-yellow-500"
+              disabled={loading}
+            >
+              {loading ? "Signing up..." : "Sign Up"}
             </Button>
           </form>
         </Form>
 
-        {/* ✅ Already have an account? */}
         <p className="text-center text-sm text-gray-400 mt-4">
           Already have an account?&nbsp;
           <Link className="text-yellow-400 hover:underline" href="/sign-in">

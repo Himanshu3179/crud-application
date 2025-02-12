@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import authOption from "@/lib/auth";
 
-// Update a Todo (PATCH)
+
 export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }
@@ -20,7 +20,7 @@ export async function PATCH(
 
     if (!id) throw new Error("Todo ID is required");
 
-    // Check if the todo belongs to the authenticated user
+
     const todo = await db.todo.findUnique({ where: { id } });
     if (!todo || todo.userId !== session.user.id) {
       return NextResponse.json({ message: "Forbidden" }, { status: 403 });
@@ -43,7 +43,7 @@ export async function PATCH(
   }
 }
 
-// Delete a Todo (DELETE)
+
 export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }
@@ -57,7 +57,6 @@ export async function DELETE(
     const { id } = params;
     if (!id) throw new Error("Todo ID is required");
 
-    // Check if the todo belongs to the authenticated user
     const todo = await db.todo.findUnique({ where: { id } });
     if (!todo || todo.userId !== session.user.id) {
       return NextResponse.json({ message: "Forbidden" }, { status: 403 });

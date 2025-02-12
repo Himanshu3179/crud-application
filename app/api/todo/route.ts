@@ -4,13 +4,13 @@ import { z } from "zod";
 import { getServerSession } from "next-auth";
 import authOption from "@/lib/auth";
 
-// Zod Schema for Todo Validation
+
 const todoSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
   completed: z.boolean().optional(),
 });
 
-// Create a Todo (POST)
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOption);
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   }
 }
 
-// Get All Todos (GET)
+
 export async function GET() {
   try {
     const session = await getServerSession(authOption);
